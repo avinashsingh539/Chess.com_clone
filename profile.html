@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile — Chess.com Clone</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .profile-page { padding: 36px 40px; max-width: 900px; }
+
+    /* Profile header card */
+    .profile-header-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .profile-avatar-lg {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      background: var(--green-primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem;
+      flex-shrink: 0;
+      border: 3px solid var(--border-color);
+    }
+    .profile-username { font-size: 1.6rem; font-weight: 800; }
+    .profile-joined   { font-size: 0.82rem; color: var(--text-muted); margin-top: 4px; }
+    .profile-rating-badge {
+      margin-left: auto;
+      background: var(--green-primary);
+      color: #fff;
+      font-size: 1.3rem;
+      font-weight: 800;
+      padding: 10px 22px;
+      border-radius: 10px;
+    }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+    .stat-card .stat-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--green-primary);
+    }
+    .stat-card .stat-lbl {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    /* Simple bar chart */
+    .chart-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .chart-title { font-weight: 700; margin-bottom: 14px; font-size: 0.95rem; }
+    .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 0.82rem; }
+    .bar-label { width: 52px; color: var(--text-secondary); text-align: right; flex-shrink: 0; }
+    .bar-track { flex: 1; background: var(--border-color); border-radius: 4px; height: 14px; overflow: hidden; }
+    .bar-fill  { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+    .bar-fill.wins   { background: var(--green-primary); }
+    .bar-fill.losses { background: #cc3333; }
+    .bar-fill.draws  { background: #a0a0a0; }
+    .bar-val { width: 32px; color: var(--text-muted); font-size: 0.78rem; }
+
+    /* Recent games table */
+    .recent-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .recent-header {
+      padding: 12px 18px;
+      font-weight: 700;
+      font-size: 0.88rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .recent-row {
+      display: grid;
+      grid-template-columns: 1fr 80px 80px 100px;
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      border-bottom: 1px solid var(--border-color);
+      align-items: center;
+    }
+    .recent-row:last-child { border-bottom: none; }
+    .result-win  { color: var(--green-primary); font-weight: 700; }
+    .result-loss { color: #e05252; font-weight: 700; }
+    .result-draw { color: var(--text-muted); font-weight: 700; }
+
+    /* Guest banner */
+    .guest-banner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 48px 32px;
+      text-align: center;
+      max-width: 420px;
+      margin: 60px auto;
+    }
+
+    @media (max-width: 600px) {
+      .profile-page { padding: 20px 14px; }
+      .profile-header-card { flex-direction: column; align-items: flex-start; }
+      .profile-rating-badge { margin-left: 0; }
+      .recent-row { grid-template-columns: 1fr 60px 60px; }
+      .recent-row > *:last-child { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar-container"></div>
+
+  <div class="layout">
+    <main class="main-content">
+      <div class="profile-page" id="profile-page">
+        <!-- Filled by JS -->
+      </div>
+    </main>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

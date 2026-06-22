@@ -1,0 +1,310 @@
+/* ============================================================
+   board.css — Chessboard, pieces, game UI styles
+   ============================================================ */
+
+/* ── 1. BOARD WRAPPER ─────────────────────────────────────── */
+.board-wrap {
+  display: inline-flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+/* Rank labels (1-8) shown on left/right, file labels (a-h) on top/bottom */
+.board-files,
+.board-ranks-row {
+  display: flex;
+  align-items: center;
+}
+
+.board-files {
+  padding-left: 22px; /* offset for rank label column */
+}
+
+.file-label, .rank-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1;
+}
+
+.file-label { width: var(--sq-size, 70px); }
+.rank-label {
+  width: 20px;
+  height: var(--sq-size, 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── 2. THE BOARD ─────────────────────────────────────────── */
+.chess-board {
+  display: grid;
+  grid-template-columns: repeat(8, var(--sq-size, 70px));
+  grid-template-rows:    repeat(8, var(--sq-size, 70px));
+  border: 3px solid #1a1816;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+
+/* Each square */
+.sq {
+  width:  var(--sq-size, 70px);
+  height: var(--sq-size, 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: default;
+}
+
+/* Checkerboard coloring — applied via JS class */
+.sq.light { background: var(--cream-board); }
+.sq.dark  { background: var(--green-board); }
+
+/* ── 3. SQUARE STATE HIGHLIGHTS ───────────────────────────── */
+/* Selected piece square */
+.sq.selected {
+  background: rgba(20, 85, 30, 0.55) !important;
+  box-shadow: inset 0 0 0 3px rgba(20,85,30,0.8);
+}
+
+/* Legal move dot */
+.sq.legal-move::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  background: rgba(0,0,0,0.25);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Legal capture ring */
+.sq.legal-capture::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 5px rgba(0,0,0,0.25);
+  pointer-events: none;
+}
+
+/* Last-move highlight */
+.sq.last-from { background: rgba(155, 199, 0, 0.35) !important; }
+.sq.last-to   { background: rgba(155, 199, 0, 0.5)  !important; }
+
+/* Check highlight */
+.sq.in-check  { background: rgba(220, 30, 30, 0.55) !important; }
+
+/* ── 4. PIECES ────────────────────────────────────────────── */
+.piece {
+  font-size: calc(var(--sq-size, 70px) * 0.80);
+  line-height: 1;
+  cursor: grab;
+  position: absolute;
+  /* GPU-accelerated positioning for smooth animation */
+  transition: transform 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  z-index: 2;
+  pointer-events: all;
+  /* Crisp rendering for unicode chess symbols */
+  text-rendering: optimizeLegibility;
+}
+
+.piece:active { cursor: grabbing; z-index: 10; }
+
+/* Dragging state — piece follows cursor */
+.piece.dragging {
+  opacity: 0.85;
+  cursor: grabbing;
+  z-index: 100;
+  transition: none; /* no transition while dragging */
+  pointer-events: none;
+}
+
+/* White pieces — slightly brighter */
+.piece.white {
+  color: #ffffff;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.9)) drop-shadow(0 0 1px rgba(0,0,0,1));
+}
+
+/* Black pieces */
+.piece.black {
+  color: #1a1a1a;
+  filter: drop-shadow(0 1px 2px rgba(255,255,255,0.3)) drop-shadow(0 0 1px rgba(0,0,0,0.8));
+}
+
+/* ── 5. PLAYER NAMEPLATES ─────────────────────────────────── */
+.nameplate {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 4px;
+}
+
+.nameplate .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.nameplate .player-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text-primary);
+}
+
+.nameplate .player-rating {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+/* Captured pieces tray */
+.captured-tray {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  min-height: 24px;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--text-secondary);
+}
+
+/* Timer display */
+.timer {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* Timer active (ticking player) */
+.timer.active {
+  background: var(--green-primary);
+  color: #fff;
+  border-color: var(--green-primary);
+}
+
+/* Timer low time warning */
+.timer.low-time {
+  background: #cc3333;
+  border-color: #cc3333;
+  color: #fff;
+  animation: pulse-timer 1s ease infinite;
+}
+
+@keyframes pulse-timer {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.7; }
+}
+
+/* ── 6. MOVE HISTORY PANEL ────────────────────────────────── */
+.move-history {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.move-history-header {
+  padding: 10px 14px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.move-history-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 6px 0;
+}
+
+.move-row {
+  display: grid;
+  grid-template-columns: 32px 1fr 1fr;
+  align-items: center;
+  padding: 3px 10px;
+  font-size: 0.85rem;
+  gap: 4px;
+}
+
+.move-row:nth-child(even) { background: rgba(255,255,255,0.03); }
+
+.move-num { color: var(--text-muted); font-size: 0.78rem; }
+
+.move-san {
+  padding: 2px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background var(--transition);
+  font-family: 'Courier New', monospace;
+}
+.move-san:hover    { background: var(--bg-card-hover); }
+.move-san.current  { background: var(--green-primary); color: #fff; }
+
+/* ── 7. PROMOTION MODAL PIECES ────────────────────────────── */
+.promo-piece-btn {
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 2.8rem;
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+  transition: border-color var(--transition), transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.promo-piece-btn:hover {
+  border-color: var(--green-primary);
+  transform: scale(1.08);
+}
+
+/* ── 8. PUZZLE FEEDBACK ───────────────────────────────────── */
+.feedback-correct {
+  color: var(--green-primary);
+  font-weight: 700;
+  animation: feedbackPop 0.3s ease;
+}
+.feedback-wrong {
+  color: #e05252;
+  font-weight: 700;
+  animation: feedbackPop 0.3s ease;
+}
+
+@keyframes feedbackPop {
+  0%   { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+/* ── 9. RESPONSIVE BOARD SIZING ───────────────────────────── */
+/* Default (desktop) sq size set via CSS var on .board-wrap or inline */
+@media (max-width: 1100px) {
+  :root { --sq-size-resp: 60px; }
+}
+@media (max-width: 768px) {
+  :root { --sq-size-resp: 44px; }
+  .piece { font-size: calc(var(--sq-size, 44px) * 0.78); }
+}
+@media (max-width: 480px) {
+  :root { --sq-size-resp: 40px; }
+}

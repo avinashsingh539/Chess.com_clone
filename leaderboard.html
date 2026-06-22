@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaderboard — Chess.com Clone</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .lb-page { padding: 36px 40px; max-width: 860px; }
+
+    .lb-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 22px; }
+
+    /* Search + sort bar */
+    .lb-controls { display: flex; gap: 10px; flex-wrap: wrap; }
+    .lb-search {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      outline: none;
+      width: 200px;
+      transition: border-color var(--transition);
+    }
+    .lb-search:focus { border-color: var(--green-primary); }
+
+    .lb-sort-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+    }
+    .lb-sort-btn.active, .lb-sort-btn:hover {
+      background: var(--green-primary);
+      color: #fff;
+      border-color: var(--green-primary);
+    }
+
+    /* Table */
+    .lb-table-wrap {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .lb-table { width: 100%; border-collapse: collapse; }
+    .lb-table thead th {
+      padding: 12px 16px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .lb-table thead th:hover { color: var(--text-primary); }
+    .lb-table thead th.sorted { color: var(--green-primary); }
+    .lb-table tbody tr {
+      border-bottom: 1px solid var(--border-color);
+      transition: background var(--transition);
+    }
+    .lb-table tbody tr:last-child { border-bottom: none; }
+    .lb-table tbody tr:hover { background: var(--bg-card-hover); }
+    .lb-table td {
+      padding: 11px 16px;
+      font-size: 0.88rem;
+      color: var(--text-primary);
+    }
+
+    /* Rank column special styling */
+    .rank-num { font-weight: 800; color: var(--text-muted); }
+    .rank-num.top3 { color: var(--green-primary); font-size: 1rem; }
+
+    /* Win rate bar */
+    .wr-bar { display: flex; align-items: center; gap: 8px; }
+    .wr-track { width: 70px; height: 8px; background: var(--border-color); border-radius: 4px; overflow: hidden; }
+    .wr-fill  { height: 100%; background: var(--green-primary); border-radius: 4px; }
+    .wr-text  { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* No results row */
+    .no-results { padding: 28px; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+
+    @media (max-width: 600px) {
+      .lb-page { padding: 16px 10px; }
+      .lb-table td:nth-child(4),
+      .lb-table th:nth-child(4),
+      .lb-table td:nth-child(5),
+      .lb-table th:nth-child(5) { display: none; }
+      .lb-search { width: 140px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar-container"></div>
+
+  <div class="layout">
+    <main class="main-content">
+      <div class="lb-page">
+
+        <div class="lb-header">
+          <div>
+            <h1 style="font-size:1.5rem;font-weight:800;margin-bottom:4px;">🏆 Leaderboard</h1>
+            <p style="color:var(--text-muted);font-size:0.85rem;">Top players ranked by rating</p>
+          </div>
+          <div class="lb-controls">
+            <input type="text" class="lb-search" id="lb-search" placeholder="🔍 Search player…">
+            <button class="lb-sort-btn active" data-sort="rating">Rating ↕</button>
+            <button class="lb-sort-btn" data-sort="wins">Wins ↕</button>
+          </div>
+        </div>
+
+        <div class="lb-table-wrap">
+          <table class="lb-table" id="lb-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Player</th>
+                <th class="sorted" data-col="rating">Rating</th>
+                <th data-col="wins">Wins</th>
+                <th data-col="losses">Losses</th>
+                <th>Win Rate</th>
+              </tr>
+            </thead>
+            <tbody id="lb-body">
+              <tr><td colspan="6" class="no-results">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/leaderboard.js"></script>
+</body>
+</html>

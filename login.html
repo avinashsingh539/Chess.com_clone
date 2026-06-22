@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Chess.com Clone</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <style>
+    .auth-page {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 32px 16px;
+    }
+    .auth-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 420px;
+    }
+    .auth-logo { text-align: center; font-size: 2.5rem; margin-bottom: 6px; }
+    .auth-title { text-align: center; font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; }
+
+    /* Tab switcher */
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 24px;
+    }
+    .auth-tab {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 10px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color var(--transition), border-color var(--transition);
+    }
+    .auth-tab.active {
+      color: var(--green-primary);
+      border-bottom-color: var(--green-primary);
+    }
+
+    /* Form inputs */
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color var(--transition);
+    }
+    .form-group input:focus { border-color: var(--green-primary); }
+    .form-group input.is-invalid { border-color: #cc3333; }
+    .form-group input.is-valid   { border-color: var(--green-primary); }
+
+    .field-error {
+      font-size: 0.78rem;
+      color: #e05252;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--green-primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 30px;
+      padding: 11px;
+      margin-top: 8px;
+      transition: background var(--transition);
+      cursor: pointer;
+    }
+    .btn-submit:hover { background: var(--green-hover); }
+
+    .auth-success {
+      display: none;
+      text-align: center;
+      padding: 20px 0;
+    }
+    .auth-success .success-icon { font-size: 3rem; margin-bottom: 10px; }
+    .auth-success p { color: var(--text-secondary); }
+  </style>
+</head>
+<body>
+  <div id="sidebar-container"></div>
+
+  <div class="layout">
+    <main class="main-content">
+      <div class="auth-page">
+        <div class="auth-card">
+
+          <div class="auth-logo">♟</div>
+          <div class="auth-title">Chess.com Clone</div>
+
+          <!-- Tab switcher -->
+          <div class="auth-tabs">
+            <button class="auth-tab active" id="tab-login"  data-tab="login">Log In</button>
+            <button class="auth-tab"        id="tab-signup" data-tab="signup">Sign Up</button>
+          </div>
+
+          <!-- ── LOGIN FORM ── -->
+          <form id="form-login" novalidate>
+            <div class="form-group">
+              <label for="login-username">Username</label>
+              <input type="text" id="login-username" placeholder="Enter username" autocomplete="username">
+              <div class="field-error" id="err-login-username">Please enter your username.</div>
+            </div>
+            <div class="form-group">
+              <label for="login-password">Password</label>
+              <input type="password" id="login-password" placeholder="Enter password" autocomplete="current-password">
+              <div class="field-error" id="err-login-password">Please enter your password.</div>
+            </div>
+            <div class="field-error" id="err-login-general" style="display:block;text-align:center;margin-bottom:8px;"></div>
+            <button type="submit" class="btn-submit">Log In</button>
+          </form>
+
+          <!-- ── SIGNUP FORM ── -->
+          <form id="form-signup" novalidate style="display:none;">
+            <div class="form-group">
+              <label for="signup-username">Username</label>
+              <input type="text" id="signup-username" placeholder="Choose a username" autocomplete="username">
+              <div class="field-error" id="err-signup-username"></div>
+            </div>
+            <div class="form-group">
+              <label for="signup-email">Email</label>
+              <input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email">
+              <div class="field-error" id="err-signup-email"></div>
+            </div>
+            <div class="form-group">
+              <label for="signup-password">Password</label>
+              <input type="password" id="signup-password" placeholder="At least 6 characters" autocomplete="new-password">
+              <div class="field-error" id="err-signup-password"></div>
+            </div>
+            <div class="form-group">
+              <label for="signup-confirm">Confirm Password</label>
+              <input type="password" id="signup-confirm" placeholder="Repeat password" autocomplete="new-password">
+              <div class="field-error" id="err-signup-confirm"></div>
+            </div>
+            <button type="submit" class="btn-submit">Create Account</button>
+          </form>
+
+          <!-- Success screen -->
+          <div class="auth-success" id="auth-success">
+            <div class="success-icon">✅</div>
+            <h3 id="success-title" style="margin-bottom:8px;">Welcome!</h3>
+            <p id="success-msg">Redirecting to your profile…</p>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

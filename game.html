@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Play Game — Chess.com Clone</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/board.css">
+  <style>
+    /* ── Game page layout ────────────────────────────────────── */
+    .game-page {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 28px 32px;
+      min-height: 100vh;
+    }
+
+    /* ── Centre column: nameplates + board ───────────────────── */
+    .game-board-col {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nameplate-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px 2px;
+      gap: 10px;
+    }
+
+    /* ── Right column: controls + move history ───────────────── */
+    .game-panel {
+      flex: 1;
+      min-width: 220px;
+      max-width: 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-top: 4px;
+    }
+
+    /* Mode badge shown at top of panel */
+    .mode-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 5px 14px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+    .mode-badge.bot-mode   { border-color: var(--green-primary); color: var(--green-primary); }
+    .mode-badge.demo-mode  { border-color: #c97c2a; color: #c97c2a; }
+
+    /* Game control buttons */
+    .game-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-control {
+      flex: 1;
+      min-width: 80px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-primary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 8px 10px;
+      transition: background var(--transition), border-color var(--transition);
+      cursor: pointer;
+    }
+    .btn-control:hover  { background: var(--bg-card-hover); border-color: var(--text-muted); }
+    .btn-control.danger { border-color: #cc3333; color: #e05252; }
+    .btn-control.danger:hover { background: rgba(204,51,51,0.12); }
+
+    /* Status message (whose turn, check notice) */
+    .status-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: center;
+      min-height: 40px;
+    }
+    .status-bar.check { border-color: #cc3333; color: #e05252; }
+
+    /* Move history */
+    .move-history { flex: 1; }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .game-page   { flex-direction: column; align-items: center; padding: 16px; }
+      .game-panel  { max-width: 100%; width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .game-page { padding: 10px 6px; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="sidebar-container"></div>
+
+  <div class="layout">
+    <main class="main-content">
+      <div class="game-page">
+
+        <!-- ══ BOARD COLUMN ════════════════════════════════════ -->
+        <div class="game-board-col" id="game-board-col">
+
+          <!-- Opponent nameplate (top) -->
+          <div class="nameplate-row">
+            <div class="nameplate">
+              <div class="avatar" id="opp-avatar">🤖</div>
+              <div>
+                <div class="player-name" id="opp-name">Opponent</div>
+                <div class="player-rating" id="opp-rating">1200</div>
+              </div>
+            </div>
+            <div class="captured-tray" id="captured-by-black"></div>
+            <div class="timer" id="timer-black">10:00</div>
+          </div>
+
+          <!-- Board wrap: file/rank labels + grid -->
+          <div class="board-wrap" id="game-board-wrap">
+            <div class="board-files" id="game-files-top"></div>
+            <div style="display:flex;align-items:center;">
+              <div id="game-ranks-left"  style="display:flex;flex-direction:column;"></div>
+              <div class="chess-board"   id="game-board"></div>
+              <div id="game-ranks-right" style="display:flex;flex-direction:column;"></div>
+            </div>
+            <div class="board-files" id="game-files-bottom"></div>
+          </div>
+
+          <!-- Player nameplate (bottom) -->
+          <div class="nameplate-row">
+            <div class="nameplate">
+              <div class="avatar" id="player-avatar">👤</div>
+              <div>
+                <div class="player-name" id="player-name">You</div>
+                <div class="player-rating" id="player-rating">1200</div>
+              </div>
+            </div>
+            <div class="captured-tray" id="captured-by-white"></div>
+            <div class="timer" id="timer-white">10:00</div>
+          </div>
+
+        </div><!-- /.game-board-col -->
+
+        <!-- ══ RIGHT PANEL ═════════════════════════════════════ -->
+        <div class="game-panel">
+
+          <!-- Mode badge -->
+          <div id="mode-badge" class="mode-badge">⚙ Loading…</div>
+
+          <!-- Status bar -->
+          <div class="status-bar" id="status-bar">White's turn</div>
+
+          <!-- New Game / Resign -->
+          <div class="game-controls">
+            <button class="btn-control" id="btn-new-game">⟳ New Game</button>
+            <button class="btn-control danger" id="btn-resign">⚑ Resign</button>
+          </div>
+
+          <!-- Move history panel -->
+          <div class="move-history card-dark">
+            <div class="move-history-header">Move History</div>
+            <div class="move-history-list" id="move-history-list">
+              <div style="padding:12px 14px; color:var(--text-muted); font-size:0.82rem;">
+                No moves yet.
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.game-panel -->
+
+      </div><!-- /.game-page -->
+    </main>
+  </div>
+
+  <!-- ══ PAWN PROMOTION MODAL ════════════════════════════════ -->
+  <div class="modal fade" id="promoModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content" style="background:var(--bg-card);border:1px solid var(--border-color);">
+        <div class="modal-header" style="border-bottom:1px solid var(--border-color);">
+          <h6 class="modal-title" style="color:var(--text-primary);font-weight:700;">Choose Promotion Piece</h6>
+        </div>
+        <div class="modal-body">
+          <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;" id="promo-choices">
+            <!-- Filled dynamically by JS with correct color pieces -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GAME OVER MODAL ═════════════════════════════════════ -->
+  <div class="modal fade" id="gameOverModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content" style="background:var(--bg-card);border:1px solid var(--border-color);color:var(--text-primary);">
+        <div class="modal-header" style="border-bottom:1px solid var(--border-color);">
+          <h5 class="modal-title" id="game-over-title">Game Over</h5>
+        </div>
+        <div class="modal-body text-center">
+          <div style="font-size:3rem;margin-bottom:12px;" id="game-over-icon">♟</div>
+          <p id="game-over-msg" style="color:var(--text-secondary);font-size:1rem;"></p>
+        </div>
+        <div class="modal-footer" style="border-top:1px solid var(--border-color);justify-content:center;gap:10px;">
+          <button class="btn-green" id="game-over-new">⟳ New Game</button>
+          <a href="play.html" class="btn-control" style="padding:10px 20px;border-radius:8px;display:inline-block;">
+            ← Back to Play
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+[
+  { "rank": 1,  "username": "MagnusC",      "rating": 2847, "wins": 312, "losses": 28,  "draws": 41,  "country": "🇳🇴" },
+  { "rank": 2,  "username": "FabianoC",     "rating": 2786, "wins": 289, "losses": 34,  "draws": 55,  "country": "🇺🇸" },
+  { "rank": 3,  "username": "DingLiren",    "rating": 2758, "wins": 271, "losses": 39,  "draws": 62,  "country": "🇨🇳" },
+  { "rank": 4,  "username": "AnishGiri",    "rating": 2745, "wins": 255, "losses": 44,  "draws": 70,  "country": "🇳🇱" },
+  { "rank": 5,  "username": "LevonA",       "rating": 2732, "wins": 248, "losses": 51,  "draws": 58,  "country": "🇦🇲" },
+  { "rank": 6,  "username": "MaximeVL",     "rating": 2720, "wins": 237, "losses": 55,  "draws": 63,  "country": "🇫🇷" },
+  { "rank": 7,  "username": "WesleyS",      "rating": 2710, "wins": 229, "losses": 60,  "draws": 67,  "country": "🇵🇭" },
+  { "rank": 8,  "username": "RichardR",     "rating": 2698, "wins": 220, "losses": 66,  "draws": 71,  "country": "🇺🇸" },
+  { "rank": 9,  "username": "AlexeiS",      "rating": 2685, "wins": 211, "losses": 72,  "draws": 75,  "country": "🇷🇺" },
+  { "rank": 10, "username": "PentalaH",     "rating": 2671, "wins": 203, "losses": 78,  "draws": 80,  "country": "🇮🇳" },
+  { "rank": 11, "username": "ViswanathA",   "rating": 2660, "wins": 195, "losses": 84,  "draws": 83,  "country": "🇮🇳" },
+  { "rank": 12, "username": "SamuelS",      "rating": 2648, "wins": 187, "losses": 89,  "draws": 88,  "country": "🇦🇿" },
+  { "rank": 13, "username": "PavelE",       "rating": 2635, "wins": 179, "losses": 95,  "draws": 92,  "country": "🇷🇺" },
+  { "rank": 14, "username": "BuKiangS",     "rating": 2622, "wins": 171, "losses": 101, "draws": 96,  "country": "🇨🇳" },
+  { "rank": 15, "username": "JanK",         "rating": 2610, "wins": 163, "losses": 107, "draws": 100, "country": "🇵🇱" },
+  { "rank": 16, "username": "TerryN",       "rating": 2597, "wins": 155, "losses": 113, "draws": 104, "country": "🇺🇸" },
+  { "rank": 17, "username": "SergeyK",      "rating": 2584, "wins": 147, "losses": 119, "draws": 108, "country": "🇷🇺" },
+  { "rank": 18, "username": "IvanC",        "rating": 2571, "wins": 139, "losses": 125, "draws": 112, "country": "🇭🇷" },
+  { "rank": 19, "username": "NilsG",        "rating": 2558, "wins": 131, "losses": 131, "draws": 116, "country": "🇩🇪" },
+  { "rank": 20, "username": "YoungPlayer",  "rating": 2545, "wins": 123, "losses": 137, "draws": 120, "country": "🇰🇷" }
+]

@@ -1,0 +1,161 @@
+<!-- ============================================================
+     sidebar.html — Shared sidebar component
+     Loaded into every page via: $.get('sidebar.html', fn)
+     ============================================================ -->
+
+<!-- Hamburger button (mobile only) -->
+<button id="hamburger-btn" aria-label="Open menu">☰</button>
+
+<!-- Overlay behind sidebar on mobile -->
+<div id="sidebar-overlay"></div>
+
+<!-- ── SIDEBAR ── -->
+<nav id="sidebar" aria-label="Main navigation">
+
+  <!-- Brand / Logo -->
+  <div class="sidebar-brand">
+    <span class="brand-icon">♟</span>
+    <span class="brand-name">Chess<span>.com</span></span>
+  </div>
+
+  <!-- Scrollable nav links -->
+  <ul class="sidebar-nav" id="main-nav">
+
+    <!-- Play (no flyout — goes directly to play.html) -->
+    <li class="nav-item">
+      <a href="play.html" class="nav-link" data-page="play">
+        <span class="nav-icon">▶</span>
+        <span class="nav-label">Play</span>
+      </a>
+    </li>
+
+    <!-- Puzzles — flyout -->
+    <li class="nav-item" id="nav-puzzles">
+      <button class="nav-link has-flyout" data-flyout="flyout-puzzles">
+        <span class="nav-icon">🧩</span>
+        <span class="nav-label">Puzzles</span>
+        <span class="nav-arrow">▶</span>
+      </button>
+    </li>
+
+    <!-- Learn — flyout -->
+    <li class="nav-item" id="nav-learn">
+      <button class="nav-link has-flyout" data-flyout="flyout-learn">
+        <span class="nav-icon">🎓</span>
+        <span class="nav-label">Learn</span>
+        <span class="nav-arrow">▶</span>
+      </button>
+    </li>
+
+    <!-- Train — flyout -->
+    <li class="nav-item" id="nav-train">
+      <button class="nav-link has-flyout" data-flyout="flyout-train">
+        <span class="nav-icon">🏋</span>
+        <span class="nav-label">Train</span>
+        <span class="nav-arrow">▶</span>
+      </button>
+    </li>
+
+    <!-- Watch (direct link placeholder) -->
+    <li class="nav-item">
+      <a href="coming-soon.html" class="nav-link" data-page="watch">
+        <span class="nav-icon">📺</span>
+        <span class="nav-label">Watch</span>
+      </a>
+    </li>
+
+    <!-- Community (direct link) -->
+    <li class="nav-item">
+      <a href="leaderboard.html" class="nav-link" data-page="community">
+        <span class="nav-icon">👥</span>
+        <span class="nav-label">Community</span>
+      </a>
+    </li>
+
+    <!-- Other — flyout -->
+    <li class="nav-item" id="nav-other">
+      <button class="nav-link has-flyout" data-flyout="flyout-other">
+        <span class="nav-icon">⋯</span>
+        <span class="nav-label">More</span>
+        <span class="nav-arrow">▶</span>
+      </button>
+    </li>
+
+  </ul><!-- /.sidebar-nav -->
+
+  <!-- ── BOTTOM SECTION ── -->
+  <div class="sidebar-bottom">
+
+    <!-- Search -->
+    <div class="sidebar-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="sidebar-search-input" placeholder="Search..." autocomplete="off">
+    </div>
+
+    <!-- Auth buttons -->
+    <a href="login.html#signup" class="btn-signup">Sign Up</a>
+    <a href="login.html"        class="btn-login">Log In</a>
+
+    <!-- Language + theme row -->
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <div class="lang-selector">
+        <span>🌐</span> <span>English</span>
+      </div>
+      <button class="theme-toggle-btn" id="theme-toggle" title="Toggle light/dark">🌙</button>
+    </div>
+
+  </div><!-- /.sidebar-bottom -->
+
+</nav><!-- /#sidebar -->
+
+<!-- ══════════════════════════════════════════════════════════
+     FLYOUT MENUS — positioned fixed to the right of sidebar
+     ══════════════════════════════════════════════════════════ -->
+
+<!-- Puzzles flyout -->
+<div class="flyout" id="flyout-puzzles">
+  <div class="flyout-header">Puzzles</div>
+  <a href="puzzles.html"          class="flyout-item"><span class="fi-icon">🧩</span> Puzzles</a>
+  <a href="puzzles.html#daily"    class="flyout-item"><span class="fi-icon">📅</span> Daily Puzzle</a>
+  <a href="coming-soon.html"      class="flyout-item"><span class="fi-icon">⚡</span> Puzzle Rush</a>
+  <a href="coming-soon.html"      class="flyout-item"><span class="fi-icon">⚔</span> Puzzle Battle</a>
+  <a href="coming-soon.html"      class="flyout-item"><span class="fi-icon">✏</span> Custom Puzzles</a>
+</div>
+
+<!-- Learn flyout -->
+<div class="flyout" id="flyout-learn">
+  <div class="flyout-header">Learn</div>
+  <a href="coming-soon.html" class="flyout-item"><span class="fi-icon">📖</span> Lessons</a>
+  <a href="coming-soon.html" class="flyout-item"><span class="fi-icon">🤖</span> Play Coach</a>
+  <a href="coming-soon.html" class="flyout-item"><span class="fi-icon">♟</span> Openings</a>
+</div>
+
+<!-- Train flyout -->
+<div class="flyout" id="flyout-train">
+  <div class="flyout-header">Train</div>
+  <a href="coming-soon.html" class="flyout-item"><span class="fi-icon">🎯</span> Courses</a>
+  <a href="coming-soon.html" class="flyout-item"><span class="fi-icon">📊</span> Analysis</a>
+  <a href="coming-soon.html" class="flyout-item"><span class="fi-icon">💡</span> Insights</a>
+  <a href="coming-soon.html" class="flyout-item"><span class="fi-icon">🏫</span> Classroom</a>
+  <a href="coming-soon.html" class="flyout-item"><span class="fi-icon">♔</span> Endgames</a>
+  <a href="coming-soon.html" class="flyout-item"><span class="fi-icon">🔄</span> Practice</a>
+  <a href="coming-soon.html" class="flyout-item"><span class="fi-icon">🎯</span> Aimchess</a>
+</div>
+
+<!-- Other flyout -->
+<div class="flyout" id="flyout-other">
+  <div class="flyout-header">More</div>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">📚</span> Collections</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">🗄</span> Games Database</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">📝</span> Chess Terms</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">📋</span> Rules</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">🗺</span> Explorer</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">🗳</span> Vote Chess</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">🧍</span> Solo Chess</a>
+  <a href="leaderboard.html"   class="flyout-item"><span class="fi-icon">🏆</span> Leaderboard</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">🛠</span> Tools</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">👁</span> Vision</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">🛍</span> Shop / Merch</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">🎁</span> Gift</a>
+  <a href="coming-soon.html"   class="flyout-item"><span class="fi-icon">🧮</span> Calculator</a>
+</div>
