@@ -202,17 +202,22 @@ Example:
 ```markdown
 
 
-## 📸 Project Screenshots
 
 
-### Homepage
-![Homepage](assets/images/homepage.png)
 
-### Chess Board
-![Chess Board](assets/images/game.png)
+<h2>📸 Project Screenshots</h2>
 
-### Sign Up Page
-![Sign Up](assets/images/signup.png)
+<p align="center">
+  <img src="./assets/images/homepage.png" alt="Homepage" width="900">
+</p>
+
+<p align="center">
+  <img src="./assets/images/game.png" alt="Game" width="900">
+</p>
+
+<p align="center">
+  <img src="./assets/images/signup.png" alt="Signup" width="900">
+</p>
 
 ---
 
