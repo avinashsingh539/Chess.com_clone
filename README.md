@@ -204,17 +204,15 @@ Example:
 
 ## 📸 Project Screenshots
 
-### Homepage
 
-![Homepage](assets/images/Screenshot%202026-06-22%20110458.png)
+### Homepage
+![Homepage](assets/images/homepage.png)
 
 ### Chess Board
+![Chess Board](assets/images/game.png)
 
-![Chess Board](assets/images/Screenshot%202026-06-22%20110709.png)
-
-### Leaderboard
-
-![Leaderboard](assets/images/Screenshot%202026-06-22%20110750.png)
+### Sign Up Page
+![Sign Up](assets/images/signup.png)
 
 ---
 
