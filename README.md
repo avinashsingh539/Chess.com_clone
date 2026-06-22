@@ -202,15 +202,19 @@ Example:
 ```markdown
 
 
-## Homepage
-![Homepage](assets/images/screenshot/Screenshot%202026-06-22%20110458.png)
+## 📸 Project Screenshots
+
+### Homepage
+
+![Homepage](assets/images/Screenshot%202026-06-22%20110458.png)
 
 ### Chess Board
-![Chess Board](assets/images/screenshot/Screenshot%202026-06-22%20110709.png)
+
+![Chess Board](assets/images/Screenshot%202026-06-22%20110709.png)
 
 ### Leaderboard
-![Leaderboard](assets/images/screenshot/Screenshot%202026-06-22%20110750.png)
-```
+
+![Leaderboard](assets/images/Screenshot%202026-06-22%20110750.png)
 
 ---
 
